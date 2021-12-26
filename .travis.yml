@@ -1,0 +1,25 @@
+language: go
+go: 1.15.x
+services:
+- docker
+sudo: required
+env:
+  global:
+    - secure: fLhWRDuiSD1P0INgHKLBcKdeoh35zMkPnPmD3obZxQcYbjtemeXyMfioyalqM646U43UgefnadppXk+piVUkVZBLdkGQtD7uPZJ1ImKw9w/eYoIA3HNVzr/RqcIDi1R1FjVcXnFk1rocTeedsAKBZFJ/UEAAFAHTS+2y+GrjtoP23OyAn9Sqm0tlmLusWYtAQkNcEPiQmIXApRM8GbgVBU3QjiujDeI4AzK+jONUNXqPQ9gv/GwWzyMasySpDjbCLAeV0V3avTcqN1RhO3vat1jD/g8DSe6WwXasgCFriLtBTHjGpSIDrlMxsai4MOAik7F9k5jV8u91hQxxIzzsu0l65f7MnT3DMLLDO8rwh+8gE0gdqZyXHoupzoYtjrmNlMxyuLvxUiOTfZkDCNlOyg5drJvtWD1nIRjUM1fHftRhsc06PJz0n82u0/ojuWCDkXO8KKrjQABsUdble6lx4cHBWGpWElBiI2h6DyrEAoCwe/iF8cfPPNI95Ew9r0i4IJVNYbDRa47/QljZG+gzTNc8BvC28AITDGfSlU6BIIt3TZa0T7Qt1vqj0Od4MS4l4V1sBugD+W02xmurnFlOvSH3qJLozDGYhFUlETl/pDWBTiXF8mu3ofnDb+cz9rOPyyIcCWXY5rWO5P4QrTZFHSh1i+MeG88KNUclKfxrZx0=
+install:
+- git submodule update --init
+- go mod download
+before_script:
+- go vet ./...
+- go build ./...
+- go test -run xxxx ./...
+script:
+- go test -short -failfast -coverprofile=coverage.txt ./...
+after_success:
+- bash <(curl -s https://codecov.io/bash)
+notifications:
+  email: false
+cache:
+  directories:
+  - "$GOPATH/pkg/mod"
+  - "$HOME/.cache/go-build"
