@@ -1,4 +1,4 @@
-module github.com/jamal0025/blocknative-fixed
+module github.com/shrimpyuk/blocknative-fixed
 
 go 1.15
 
